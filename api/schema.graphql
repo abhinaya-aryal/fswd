@@ -1,0 +1,55 @@
+"""
+Custom scalar type to handle Date values
+"""
+scalar GraphQLDate
+
+"""
+Enum representing the various statuses an issue can have
+"""
+enum StatusType {
+  NEW
+  ASSIGNED
+  FIXED
+  CLOSED
+}
+
+"""
+Represents an issue in the tracker
+"""
+type Issue {
+  _id: ID!
+  id: Int!
+  title: String!
+  status: StatusType!
+  owner: String
+  effort: Int
+  created: GraphQLDate!
+  due: GraphQLDate
+}
+
+"""
+Input type for adding new issues, excluding server-generated values
+"""
+input IssueInput {
+  title: String!
+  status: StatusType = NEW
+  owner: String
+  effort: Int
+  due: GraphQLDate
+}
+
+"""
+Root Query type for retrieving data
+"""
+type Query {
+  about: String!
+  issueList: [Issue!]!
+}
+
+"""
+Root Mutation type for modifying data
+"""
+type Mutation {
+  setAboutMessage(message: String!): String
+  issueAdd(issue: IssueInput!): Issue!
+}

@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": ["eslint:recommended", "airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "off",
+    "import/extensions": ["error", "always", { "ignorePackages": true }],
+    "import/no-extraneous-dependencies": "off"
+  }
+}
