@@ -1,10 +1,17 @@
 /* eslint-disable import/no-import-module-exports */
 import React from "react";
 import ReactDOM from "react-dom/client";
-import IssueList from "./IssueList.jsx";
+import { HashRouter } from "react-router-dom";
+import Page from "./Page.jsx";
 
 if (module.hot) {
   module.hot.accept();
 }
 
-ReactDOM.createRoot(document.getElementById("content")).render(<IssueList />);
+const element = (
+  <HashRouter>
+    <Page />
+  </HashRouter>
+);
+
+ReactDOM.createRoot(document.getElementById("content")).render(element);
