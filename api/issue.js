@@ -1,9 +1,11 @@
 import { UserInputError } from "apollo-server-express";
 import { getDb, getNextSequence } from "./db.js";
 
-export async function issueList() {
+export async function issueList(_, { status }) {
   const db = getDb();
-  const issues = await db.collection("issues").find({}).toArray();
+  const filter = {};
+  if (status) filter.status = status.toString().toUpperCase();
+  const issues = await db.collection("issues").find(filter).toArray();
   return issues;
 }
 
