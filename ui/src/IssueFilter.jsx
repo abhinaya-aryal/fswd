@@ -1,18 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function IssueFilter() {
+  const navigate = useNavigate();
+
+  function onChangeStatus(e) {
+    const status = e.target.value;
+    navigate({
+      pathname: "/issues",
+      search: status ? `?status=${status}` : "",
+    });
+  }
+
   return (
     <div>
-      <Link to="/issues">All Issues</Link>
-      {" | "}
-      <Link to={{ pathname: "/issues", search: "?status=NEW" }}>
-        New Issues
-      </Link>
-      {" | "}
-      <Link to={{ pathname: "/issues", search: "?status=ASSIGNED" }}>
-        Assigned Issues
-      </Link>
+      Status:&nbsp;
+      <select onChange={onChangeStatus}>
+        <option value="">(All)</option>
+        <option value="NEW">New</option>
+        <option value="ASSIGNED">Assigned</option>
+        <option value="FIXED">Fixed</option>
+        <option value="CLOSED">Closed</option>
+      </select>
     </div>
   );
 }
