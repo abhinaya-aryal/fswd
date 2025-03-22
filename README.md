@@ -87,3 +87,12 @@ In **package.json**, **main** field indicate the file to load when the project i
 If we want all static files to be accessed by a prefixed URL, for example **/public**:-
 
 [htttps://expressjs.com/en/starter/static-files.html](htttps://expressjs.com/en/starter/static-files.html)
+
+## Which Router to Use?
+
+| Router Type        | Use Case                                                      |
+| ------------------ | ------------------------------------------------------------- |
+| **Browser Router** | For standard web apps (modern Browsers)                       |
+| **Hash Router**    | When server configuration is unavailable (e.g., GitHub Pages) |
+| **Memory Router**  | For testing and React Native apps                             |
+| **Static Router**  | For server-side rendering(SSR) (e.g., Next.js, Express.js)    |

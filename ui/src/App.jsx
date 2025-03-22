@@ -1,7 +1,7 @@
 /* eslint-disable import/no-import-module-exports */
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Page from "./Page.jsx";
 
 if (module.hot) {
@@ -9,9 +9,9 @@ if (module.hot) {
 }
 
 const element = (
-  <HashRouter>
+  <BrowserRouter>
     <Page />
-  </HashRouter>
+  </BrowserRouter>
 );
 
 ReactDOM.createRoot(document.getElementById("content")).render(element);

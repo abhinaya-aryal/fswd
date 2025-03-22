@@ -5,6 +5,7 @@ import devMiddleware from "webpack-dev-middleware";
 import hotMiddleware from "webpack-hot-middleware";
 import webpack from "webpack";
 import { createRequire } from "module";
+import path from "path";
 
 const require = createRequire(import.meta.url);
 
@@ -43,6 +44,10 @@ app.use(express.static("public"));
 const env = { api };
 app.get("/env.js", (_, res) => {
   res.send(`window.ENV = ${JSON.stringify(env)}`);
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("public/index.html"));
 });
 
 app.listen(port, () => {
