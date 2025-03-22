@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Routes, Route } from "react-router-dom";
 import graphQLFetch from "./graphQLFetch.js";
 import IssueFilter from "./IssueFilter.jsx";
 import IssueTable from "./IssueTable.jsx";
 import IssueAdd from "./IssueAdd.jsx";
+import IssueDetail from "./IssueDetail.jsx";
 
 export default function IssueList() {
   const [searchParams] = useSearchParams();
@@ -37,11 +38,13 @@ export default function IssueList() {
 
   const createIssue = useCallback(
     async (issue) => {
-      const query = `mutation issueAdd($issue: IssueInput!) {
-      issueAdd(issue: $issue)  {
-        id
-      }
-    }`;
+      const query = `
+        mutation issueAdd($issue: IssueInput!) {
+          issueAdd(issue: $issue) {
+            id
+          }
+        }
+      `;
 
       const data = await graphQLFetch(query, { issue });
       if (data) {
@@ -59,6 +62,10 @@ export default function IssueList() {
       <IssueTable issues={issues} />
       <hr />
       <IssueAdd createIssue={createIssue} />
+      <hr />
+      <Routes>
+        <Route path=":id" Component={IssueDetail} />
+      </Routes>
     </>
   );
 }

@@ -12,7 +12,7 @@ export default function Contents() {
   return (
     <Routes>
       <Route exact path="/" element={<Navigate to="/issues" />} />
-      <Route path="/issues" Component={IssueList} />
+      <Route path="/issues/*" Component={IssueList} />
       <Route path="/edit/:id" Component={IssueEdit} />
       <Route path="/report" Component={IssueReport} />
       <Route path="*" Component={NotFound} />

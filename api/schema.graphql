@@ -25,6 +25,7 @@ type Issue {
   effort: Int
   created: GraphQLDate!
   due: GraphQLDate
+  description: String
 }
 
 """
@@ -36,6 +37,7 @@ input IssueInput {
   owner: String
   effort: Int
   due: GraphQLDate
+  description: String
 }
 
 """
@@ -44,6 +46,7 @@ Root Query type for retrieving data
 type Query {
   about: String!
   issueList(status: StatusType): [Issue!]!
+  issue(id: Int!): Issue!
 }
 
 """

@@ -33,3 +33,9 @@ export async function issueAdd(_, { issue }) {
   const result = await db.collection("issues").insertOne(newIssue);
   return db.collection("issues").findOne({ _id: result.insertedId });
 }
+
+export async function getIssue(_, { id }) {
+  const db = getDb();
+  const issue = await db.collection("issues").findOne({ id });
+  return issue;
+}

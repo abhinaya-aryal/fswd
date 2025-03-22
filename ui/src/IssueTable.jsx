@@ -1,7 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useSearchParams } from "react-router-dom";
 
 function IssueRow({ issue }) {
+  const [searchParams] = useSearchParams();
+  const search = searchParams.toString();
+
   return (
     <tr>
       <td>{issue.id}</td>
@@ -13,6 +16,10 @@ function IssueRow({ issue }) {
       <td>{issue.title}</td>
       <td>
         <Link to={`/edit/${issue.id}`}>Edit</Link>
+        {" | "}
+        <NavLink to={{ pathname: `/issues/${issue.id}`, search }}>
+          Select
+        </NavLink>
       </td>
     </tr>
   );
