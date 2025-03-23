@@ -11,10 +11,20 @@ export default function IssueList() {
   const [issues, setIssues] = useState([]);
 
   const loadData = useCallback(async () => {
-    const filter = Object.fromEntries(searchParams.entries());
+    const filter = {};
+    const status = searchParams.get("status");
+    if (status) filter.status = status;
+    const effortMin = parseInt(searchParams.get("effortMin"), 10);
+    if (!Number.isNaN(effortMin)) filter.effortMin = effortMin;
+    const effortMax = parseInt(searchParams.get("effortMax"), 10);
+    if (!Number.isNaN(effortMax)) filter.effortMax = effortMax;
     const query = `
-      query issueList($status: StatusType) {
-        issueList(status: $status) {
+      query issueList($status: StatusType, $effortMin: Int, $effortMax: Int) {
+        issueList(
+          status: $status
+          effortMin: $effortMin
+          effortMax: $effortMax
+        ) {
           id
           title
           status
