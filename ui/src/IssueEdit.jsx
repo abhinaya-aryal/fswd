@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import graphQLFetch from "./graphQLFetch.js";
 import NumInput from "./NumInput.jsx";
 import DateInput from "./DateInput.jsx";
+import TextInput from "./TextInput.jsx";
 
 export default function IssueEdit() {
   let { id } = useParams();
@@ -35,17 +36,8 @@ export default function IssueEdit() {
       }
     `;
     const data = await graphQLFetch(query, { id });
-    if (data) {
-      setIssue({
-        ...data.issue,
-        owner: data.issue.owner ?? "",
-        description: data.issue.description ?? "",
-      });
-      setInvalidFields({});
-    } else {
-      setIssue({});
-      setInvalidFields({});
-    }
+    setIssue(data ? data.issue : {});
+    setInvalidFields({});
   }, [id]);
 
   useEffect(() => {
@@ -59,11 +51,8 @@ export default function IssueEdit() {
 
   const onChange = (e, naturalValue) => {
     const { name, value: textValue } = e.target;
-    const newValue = naturalValue ?? textValue;
-    setIssue((prevIssue) => {
-      if (prevIssue[name] === newValue) return prevIssue; // ✅ Prevent unnecessary updates
-      return { ...prevIssue, [name]: newValue };
-    });
+    const newValue = naturalValue === undefined ? textValue : naturalValue;
+    setIssue((prevIssue) => ({ ...prevIssue, [name]: newValue }));
   };
 
   if (issue.id == null) {
@@ -89,7 +78,9 @@ export default function IssueEdit() {
         <tbody>
           <tr>
             <td>Created:</td>
-            <td>{issue.created.toDateString()}</td>
+            <td>
+              {issue.created ? new Date(issue.created).toDateString() : ""}
+            </td>
           </tr>
           <tr>
             <td>Status:</td>
@@ -105,11 +96,11 @@ export default function IssueEdit() {
           <tr>
             <td>Owner:</td>
             <td>
-              <input
-                aria-label="owner"
+              <TextInput
                 name="owner"
                 value={issue.owner}
                 onChange={onChange}
+                id={issue.id}
               />
             </td>
           </tr>
@@ -128,7 +119,6 @@ export default function IssueEdit() {
             <td>Due:</td>
             <td>
               <DateInput
-                aria-label="due"
                 name="due"
                 value={issue.due}
                 onChange={onChange}
@@ -140,25 +130,27 @@ export default function IssueEdit() {
           <tr>
             <td>Title:</td>
             <td>
-              <input
+              <TextInput
                 size={50}
-                aria-label="title"
                 name="title"
                 value={issue.title}
                 onChange={onChange}
+                id={issue.id}
               />
             </td>
           </tr>
           <tr>
             <td>Description:</td>
             <td>
-              <textarea
+              <TextInput
+                tag="textarea"
                 rows={8}
                 cols={50}
                 aria-label="description"
                 name="description"
                 value={issue.description}
                 onChange={onChange}
+                id={issue.id}
               />
             </td>
           </tr>
