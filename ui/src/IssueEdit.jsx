@@ -101,6 +101,7 @@ export default function IssueEdit() {
                 value={issue.owner}
                 onChange={onChange}
                 id={issue.id}
+                key={id}
               />
             </td>
           </tr>
@@ -112,6 +113,7 @@ export default function IssueEdit() {
                 value={issue.effort}
                 onChange={onChange}
                 id={issue.id}
+                key={issue.id}
               />
             </td>
           </tr>
@@ -124,6 +126,7 @@ export default function IssueEdit() {
                 onChange={onChange}
                 onValidityChange={onValidityChange}
                 id={issue.id}
+                key={issue.id}
               />
             </td>
           </tr>
@@ -136,6 +139,7 @@ export default function IssueEdit() {
                 value={issue.title}
                 onChange={onChange}
                 id={issue.id}
+                key={issue.id}
               />
             </td>
           </tr>
@@ -151,6 +155,7 @@ export default function IssueEdit() {
                 value={issue.description}
                 onChange={onChange}
                 id={issue.id}
+                key={issue.id}
               />
             </td>
           </tr>

@@ -19,7 +19,7 @@ function validate(issue) {
   if (!issue.title || issue.title.length < 3) {
     errors.push("Field 'title' must be at least 3 characters long.");
   }
-  if (issue.status === "Assigned" && !issue.owner) {
+  if (issue.status === "ASSIGNED" && !issue.owner) {
     errors.push("Field 'owner' is required when status is 'Assigned'");
   }
   if (errors.length > 0) {
@@ -43,4 +43,16 @@ export async function getIssue(_, { id }) {
   const db = getDb();
   const issue = await db.collection("issues").findOne({ id });
   return issue;
+}
+
+export async function issueUpdate(_, { id, changes }) {
+  const db = getDb();
+  if (changes.title || changes.status || changes.owner) {
+    const issue = await db.collection("issues").findOne({ id });
+    Object.assign(issue, changes);
+    validate(issue);
+  }
+  await db.collection("issues").updateOne({ id }, { $set: changes });
+  const savedIssue = await db.collection("issues").findOne({ id });
+  return savedIssue;
 }
