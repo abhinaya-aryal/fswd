@@ -64,12 +64,42 @@ export default function IssueList() {
     [loadData],
   );
 
+  const closeIssue = useCallback(
+    async (index) => {
+      const query = `
+      mutation issueClose($id: Int!) {
+        issueUpdate(id: $id, changes: { status: CLOSED }) {
+          id
+          title
+          status
+          owner
+          effort
+          created
+          due
+          description
+        }
+      }
+    `;
+      const data = await graphQLFetch(query, { id: issues[index].id });
+      if (data) {
+        setIssues((prevIssues) => {
+          const newList = [...prevIssues];
+          newList[index] = data.issueUpdate;
+          return [...newList];
+        });
+      } else {
+        loadData();
+      }
+    },
+    [issues, loadData],
+  );
+
   return (
     <>
       <h1>Issue Tracker</h1>
       <IssueFilter />
       <hr />
-      <IssueTable issues={issues} />
+      <IssueTable issues={issues} closeIssue={closeIssue} />
       <hr />
       <IssueAdd createIssue={createIssue} />
       <hr />

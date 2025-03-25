@@ -65,7 +65,6 @@ export default function IssueEdit() {
     const data = await graphQLFetch(query, { changes, id });
     if (data) {
       setIssue(data.issueUpdate);
-      console.log("Updated issue successfully");
     }
   };
 
