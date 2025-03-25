@@ -26,7 +26,6 @@ export default function TextInput({
 
   function handleBlur(e) {
     onChange(e, unformat(inputValue)); // Ensure null is sent on blur
-    console.log(unformat(inputValue));
   }
 
   return React.createElement(tag || "input", {

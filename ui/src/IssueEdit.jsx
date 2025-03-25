@@ -6,10 +6,10 @@ import DateInput from "./DateInput.jsx";
 import TextInput from "./TextInput.jsx";
 
 export default function IssueEdit() {
-  let { id } = useParams();
+  let { id: curId } = useParams();
   const [issue, setIssue] = useState({});
   const [invalidFields, setInvalidFields] = useState({});
-  id = parseInt(id, 10);
+  curId = parseInt(curId, 10);
 
   function onValidityChange(event, valid) {
     const { name } = event.target;
@@ -35,18 +35,38 @@ export default function IssueEdit() {
         }
       }
     `;
-    const data = await graphQLFetch(query, { id });
+    const data = await graphQLFetch(query, { id: curId });
     setIssue(data ? data.issue : {});
     setInvalidFields({});
-  }, [id]);
+  }, [curId]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(issue);
+    if (Object.keys(invalidFields).length !== 0) return;
+    const query = `
+      mutation issueUpdate($id: Int!, $changes: IssueUpdateInputs!) {
+        issueUpdate(id: $id, changes: $changes) {
+          id
+          title
+          status
+          owner
+          effort
+          created
+          due
+          description
+        }
+      }
+    `;
+    const { id, created, ...changes } = issue;
+    const data = await graphQLFetch(query, { changes, id });
+    if (data) {
+      setIssue(data.issueUpdate);
+      console.log("Updated issue successfully");
+    }
   };
 
   const onChange = (e, naturalValue) => {
@@ -56,8 +76,8 @@ export default function IssueEdit() {
   };
 
   if (issue.id == null) {
-    if (id != null) {
-      return <h3>{`Issue with ID ${id} not found.`}</h3>;
+    if (curId != null) {
+      return <h3>{`Issue with ID ${curId} not found.`}</h3>;
     }
     return null;
   }
@@ -101,7 +121,7 @@ export default function IssueEdit() {
                 value={issue.owner}
                 onChange={onChange}
                 id={issue.id}
-                key={id}
+                key={issue.id}
               />
             </td>
           </tr>
@@ -168,9 +188,9 @@ export default function IssueEdit() {
         </tbody>
       </table>
       {validationMessage}
-      <Link to={`/edit/${id - 1}`}>Prev</Link>
+      <Link to={`/edit/${curId - 1}`}>Prev</Link>
       {" | "}
-      <Link to={`/edit/${id + 1}`}>Next</Link>
+      <Link to={`/edit/${curId + 1}`}>Next</Link>
     </form>
   );
 }
