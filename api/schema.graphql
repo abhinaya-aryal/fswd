@@ -70,4 +70,5 @@ type Mutation {
   setAboutMessage(message: String!): String
   issueAdd(issue: IssueInput!): Issue!
   issueUpdate(id: Int!, changes: IssueUpdateInputs!): Issue!
+  issueDelete(id: Int!): Boolean!
 }

@@ -3,7 +3,13 @@ import dotenv from "dotenv";
 import { ApolloServer } from "apollo-server-express";
 import GraphQLDate from "./graphql_date.js";
 import { setMessage, getMessage } from "./about.js";
-import { issueList, issueAdd, getIssue, issueUpdate } from "./issue.js";
+import {
+  issueList,
+  issueAdd,
+  getIssue,
+  issueUpdate,
+  issueDelete,
+} from "./issue.js";
 
 dotenv.config();
 
@@ -17,6 +23,7 @@ const resolvers = {
     setAboutMessage: setMessage,
     issueAdd,
     issueUpdate,
+    issueDelete,
   },
   GraphQLDate,
 };
