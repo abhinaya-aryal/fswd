@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink, useSearchParams } from "react-router-dom";
 
-function IssueRow({ issue, closeIssue, index }) {
+function IssueRow({ issue, closeIssue, index, deleteIssue }) {
   const [searchParams] = useSearchParams();
   const search = searchParams.toString();
 
@@ -29,12 +29,21 @@ function IssueRow({ issue, closeIssue, index }) {
         >
           Close
         </button>
+        {" | "}
+        <button
+          type="button"
+          onClick={() => {
+            deleteIssue(index);
+          }}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );
 }
 
-export default function IssueTable({ issues, closeIssue }) {
+export default function IssueTable({ issues, closeIssue, deleteIssue }) {
   return (
     <table className="bordered-table">
       <thead>
@@ -56,6 +65,7 @@ export default function IssueTable({ issues, closeIssue }) {
             issue={issue}
             closeIssue={closeIssue}
             index={index}
+            deleteIssue={deleteIssue}
           />
         ))}
       </tbody>

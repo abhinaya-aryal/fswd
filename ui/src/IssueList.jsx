@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useSearchParams, Routes, Route } from "react-router-dom";
+import {
+  useSearchParams,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import graphQLFetch from "./graphQLFetch.js";
 import IssueFilter from "./IssueFilter.jsx";
 import IssueTable from "./IssueTable.jsx";
@@ -9,6 +15,8 @@ import IssueDetail from "./IssueDetail.jsx";
 export default function IssueList() {
   const [searchParams] = useSearchParams();
   const [issues, setIssues] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const loadData = useCallback(async () => {
     const filter = {};
@@ -94,12 +102,40 @@ export default function IssueList() {
     [issues, loadData],
   );
 
+  const deleteIssue = useCallback(
+    async (index) => {
+      const query = `
+      mutation issueDelete($id: Int!) {
+        issueDelete(id: $id)
+      }
+    `;
+      const data = await graphQLFetch(query, { id: issues[index].id });
+      if (data && data.issueDelete) {
+        setIssues((prevIssues) => {
+          const newList = [...prevIssues];
+          if (location.pathname === `/issues/${issues[index].id}`) {
+            navigate({ pathname: "/issues", search: location.search });
+          }
+          newList.splice(index, 1);
+          return [...newList];
+        });
+      } else {
+        loadData();
+      }
+    },
+    [issues, loadData, location.pathname, location.search, navigate],
+  );
+
   return (
     <>
       <h1>Issue Tracker</h1>
       <IssueFilter />
       <hr />
-      <IssueTable issues={issues} closeIssue={closeIssue} />
+      <IssueTable
+        issues={issues}
+        closeIssue={closeIssue}
+        deleteIssue={deleteIssue}
+      />
       <hr />
       <IssueAdd createIssue={createIssue} />
       <hr />
