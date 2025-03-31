@@ -21,7 +21,7 @@
   },
   "plugins": ["react", "react-hooks", "jsx-a11y", "prettier"],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
     "react/react-in-jsx-scope": "off",
     "import/extensions": ["error", "always", { "ignorePackages": true }],
     "react/prop-types": "off",

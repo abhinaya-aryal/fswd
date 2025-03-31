@@ -7,10 +7,10 @@ scalar GraphQLDate
 Enum representing the various statuses an issue can have
 """
 enum StatusType {
-  NEW
-  ASSIGNED
-  FIXED
-  CLOSED
+  New
+  Assigned
+  Fixed
+  Closed
 }
 
 """
@@ -33,7 +33,7 @@ Input type for adding new issues, excluding server-generated values
 """
 input IssueInput {
   title: String!
-  status: StatusType = NEW
+  status: StatusType = New
   owner: String
   effort: Int
   due: GraphQLDate

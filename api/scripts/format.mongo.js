@@ -1,6 +1,6 @@
 /*
  * localhost:
-        mongosh issuetracker scripts/init.mongo.js
+        mongosh issuetracker scripts/format.mongo.js
  
 * Atlas:
 *       mongosh mongodb+srv://user:pwd@xxx.mongodb.net/issuetracker scripts/init.mongo.js
@@ -15,7 +15,7 @@ db.deleted_issues.deleteMany({});
 const issuesDB = [
   {
     id: 1,
-    status: "NEW",
+    status: "New",
     owner: "Ravan",
     created: new Date("2025-05-15"),
     due: null,
@@ -25,7 +25,7 @@ const issuesDB = [
   },
   {
     id: 2,
-    status: "ASSIGNED",
+    status: "Assigned",
     owner: "Eddie",
     effort: 14,
     created: new Date("2025-01-16"),

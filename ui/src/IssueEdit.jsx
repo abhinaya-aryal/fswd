@@ -4,6 +4,7 @@ import graphQLFetch from "./graphQLFetch.js";
 import NumInput from "./NumInput.jsx";
 import DateInput from "./DateInput.jsx";
 import TextInput from "./TextInput.jsx";
+import CustomDropDown from "./components/CustomDropDown.jsx";
 
 export default function IssueEdit() {
   let { id: curId } = useParams();
@@ -74,6 +75,10 @@ export default function IssueEdit() {
     setIssue((prevIssue) => ({ ...prevIssue, [name]: newValue }));
   };
 
+  const onStatusChange = (value) => {
+    setIssue((prevIssue) => ({ ...prevIssue, status: value }));
+  };
+
   if (issue.id == null) {
     if (curId != null) {
       return <h3>{`Issue with ID ${curId} not found.`}</h3>;
@@ -104,12 +109,10 @@ export default function IssueEdit() {
           <tr>
             <td>Status:</td>
             <td>
-              <select name="status" value={issue.status} onChange={onChange}>
-                <option value="NEW">New</option>
-                <option value="ASSIGNED">Assigned</option>
-                <option value="FIXED">Fixed</option>
-                <option value="CLOSED">Closed</option>
-              </select>
+              <CustomDropDown
+                selectedValue={issue.status}
+                onSelect={onStatusChange}
+              />
             </td>
           </tr>
           <tr>

@@ -4,7 +4,7 @@ import { getDb, getNextSequence } from "./db.js";
 export async function issueList(_, { status, effortMin, effortMax }) {
   const db = getDb();
   const filter = {};
-  if (status) filter.status = status.toString().toUpperCase();
+  if (status) filter.status = status.toString();
   if (effortMin !== undefined || effortMax !== undefined) {
     filter.effort = {};
     if (effortMin !== undefined) filter.effort.$gte = effortMin;

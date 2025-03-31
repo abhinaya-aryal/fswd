@@ -76,7 +76,7 @@ export default function IssueList() {
     async (index) => {
       const query = `
       mutation issueClose($id: Int!) {
-        issueUpdate(id: $id, changes: { status: CLOSED }) {
+        issueUpdate(id: $id, changes: { status: Closed }) {
           id
           title
           status
@@ -128,17 +128,13 @@ export default function IssueList() {
 
   return (
     <>
-      <h1>Issue Tracker</h1>
       <IssueFilter />
-      <hr />
       <IssueTable
         issues={issues}
         closeIssue={closeIssue}
         deleteIssue={deleteIssue}
       />
-      <hr />
       <IssueAdd createIssue={createIssue} />
-      <hr />
       <Routes>
         <Route path=":id" Component={IssueDetail} />
       </Routes>
