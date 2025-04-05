@@ -29,9 +29,11 @@ export default function IssueDetail() {
   }, [loadData]);
 
   return (
-    <div>
-      <h3>Description</h3>
-      <pre>{issue.description}</pre>
+    <div className="max-w-6xl mx-auto  my-12">
+      <h3 className="text-2xl font-semibold">Description</h3>
+      <div className="bg-white p-6 shadow-lg rounded-lg mt-2">
+        <pre>{issue.description}</pre>
+      </div>
     </div>
   );
 }

@@ -54,12 +54,12 @@ export default function DateInput({
       type="text"
       size={20}
       name={name}
-      className={className}
       value={displayValue}
-      placeholder={focused ? "yyyy-mm-dd" : null}
+      placeholder="yyyy-mm-dd"
       onFocus={onFocus}
       onBlur={onBlur}
       onChange={changeValue}
+      className={`bg-white text-black px-4 py-2 rounded-md shadow-md w-full ${className}`}
     />
   );
 }

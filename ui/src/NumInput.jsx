@@ -30,6 +30,7 @@ export default function NumInput({ name, value, onChange, id }) {
       value={inputValue}
       onBlur={onBlur}
       onChange={changeValue}
+      className="bg-white text-black px-4 py-2 rounded-md shadow-md w-full"
     />
   );
 }

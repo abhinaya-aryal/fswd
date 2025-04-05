@@ -16,10 +16,40 @@ export default function IssueAdd({ createIssue }) {
   }
 
   return (
-    <form name="issueAdd" onSubmit={handleSubmit}>
-      <input type="text" name="owner" placeholder="Owner" />
-      <input type="text" name="title" placeholder="Title" />
-      <button type="submit">Add</button>
+    <form
+      name="issueAdd"
+      className="max-w-6xl mx-auto grid grid-cols-3 gap-8 mt-8"
+      onSubmit={handleSubmit}
+    >
+      <div>
+        <label htmlFor="owner" className="block mb-2 font-semibold">
+          Owner:
+        </label>
+        <input
+          type="text"
+          name="owner"
+          id="owner"
+          placeholder="Owner"
+          className="bg-white text-black px-4 py-2 rounded-md shadow-md col-span-1 w-full"
+        />
+      </div>
+      <div>
+        <label htmlFor="title" className="block mb-2 font-semibold">
+          Title:
+        </label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          className="bg-white text-black px-4 py-2 rounded-md shadow-md col-span-1 w-full"
+        />
+      </div>
+      <button
+        type="submit"
+        className="bg-blue-600 w-max text-white px-16 py-3 rounded-md font-semibold shadow-md hover:bg-blue-700 transition h-max self-end"
+      >
+        Add
+      </button>
     </form>
   );
 }

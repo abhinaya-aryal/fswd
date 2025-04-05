@@ -1,15 +1,21 @@
 import React from "react";
-import { Link, NavLink, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 
 function IssueRow({ issue, closeIssue, index, deleteIssue }) {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const search = searchParams.toString();
 
   return (
-    <tr className="hover:bg-white transition cursor-pointer">
+    <tr
+      className="hover:bg-white transition cursor-pointer"
+      onClick={() => {
+        navigate({ pathname: `/issues/${issue.id}`, search });
+      }}
+    >
       <td className="p-3 text-center text-gray-800 border-2 border-white">
         {issue.id}
       </td>
@@ -39,20 +45,18 @@ function IssueRow({ issue, closeIssue, index, deleteIssue }) {
             title="Edit issue"
             to={`/edit/${issue.id}`}
             className="p-1 text-blue-600 text-2xl hover:bg-blue-600 hover:text-white rounded-full"
+            onClick={(event) => event.stopPropagation()}
           >
             <BiEdit />
           </Link>
-          <NavLink
-            to={{ pathname: `/issues/${issue.id}`, search }}
-            className="text-green-600 hover:underline"
-          >
-            Select
-          </NavLink>
           <button
             title="Close issue"
             type="button"
             className="p-1 text-green-600 text-2xl hover:bg-green-600 hover:text-white rounded-full"
-            onClick={() => closeIssue(index)}
+            onClick={(event) => {
+              event.stopPropagation();
+              closeIssue(index);
+            }}
           >
             <IoClose />
           </button>
@@ -60,7 +64,10 @@ function IssueRow({ issue, closeIssue, index, deleteIssue }) {
             title="Delete issue"
             type="button"
             className="p-1 text-red-600 text-2xl hover:bg-red-600 hover:text-white rounded-full"
-            onClick={() => deleteIssue(index)}
+            onClick={(event) => {
+              event.stopPropagation();
+              deleteIssue(index);
+            }}
           >
             <MdDeleteOutline />
           </button>
@@ -76,7 +83,7 @@ export default function IssueTable({ issues, closeIssue, deleteIssue }) {
       <table className="w-full max-w-6xl mx-auto bg-slate-200 shadow-lg overflow-hidden border-collapse">
         <thead className="bg-gradient-to-r from-blue-500 to-purple-900 text-white">
           <tr>
-            <th className="p-3 text-center border-2 border-white">ID</th>
+            <th className="p-3 text-center border-2 border-white">S.N.</th>
             <th className="p-3 text-center border-2 border-white">Status</th>
             <th className="p-3 text-center border-2 border-white">Owner</th>
             <th className="p-3 text-center border-2 border-white">Created</th>

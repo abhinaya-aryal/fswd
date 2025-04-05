@@ -30,14 +30,14 @@ export default function CustomDropdown({ selectedValue, onSelect }) {
   }
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative w-full" ref={dropdownRef}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className="flex justify-between items-center w-40 bg-white text-black px-4 py-2 rounded-md shadow-md hover:bg-slate-100 transition"
+        className="flex justify-between items-center w-full bg-white text-black px-4 py-2 rounded-md shadow-md hover:bg-slate-100 transition"
       >
         {selectedValue || "(All)"}
         <svg
@@ -59,7 +59,7 @@ export default function CustomDropdown({ selectedValue, onSelect }) {
       {isOpen && (
         <ul
           role="listbox"
-          className="absolute left-0 w-40 mt-2 bg-white text-black rounded-md shadow-lg overflow-hidden"
+          className="absolute left-0 w-full mt-2 bg-white text-black rounded-md shadow-lg overflow-hidden"
         >
           {options.map((option) => (
             <li
